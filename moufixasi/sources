@@ -1,0 +1,20 @@
+
+TARGETNAME=moufix
+TARGETEXT=asi
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETLIBS=$(SDK_LIB_PATH)\user32.lib      \
+           $(SDK_LIB_PATH)\advapi32.lib    \
+           $(SDK_LIB_PATH)\kernel32.lib    \
+           $(SDK_LIB_PATH)\GDI32.LIB       \
+           $(SDK_LIB_PATH)\IMM32.LIB       \
+           $(SDK_LIB_PATH)\HTMLHELP.LIB    \
+           $(SDK_LIB_PATH)\COMDLG32.LIB
+
+DLLENTRY=DllMain
+USE_MSVCRT=1
+
+#C_DEFINES=-DBUILDDLL -DUNICODE -D_UNICODE -O2
+
+SOURCES=\
+	main.c
