@@ -146,7 +146,18 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
 		if( pRawData->data.mouse.usButtonFlags & RI_MOUSE_BUTTON_5_UP )
 			g_uButtons &= ~MK_XBUTTON2;
 
-		if( pRawData->data.mouse.usFlags == MOUSE_MOVE_RELATIVE )
+		if( pRawData->data.mouse.usFlags & MOUSE_MOVE_ABSOLUTE )
+		{
+			g_ptCursorPos.x = pRawData->data.mouse.lLastX;
+			g_ptCursorPos.y = pRawData->data.mouse.lLastY;
+
+			if( g_ptCursorPos.x < 0 )
+				g_ptCursorPos.x = 0;
+
+			if( g_ptCursorPos.y < 0 )
+				g_ptCursorPos.y = 0;
+		}
+		else
 		{
 			static float scale_accum_x = 0;
 			static float scale_accum_y = 0;
@@ -171,18 +182,6 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam 
 
 			if( g_ptCursorPos.y > bottom )
 				g_ptCursorPos.y = bottom;
-		}
-
-		if( pRawData->data.mouse.usFlags == MOUSE_MOVE_ABSOLUTE )
-		{
-			g_ptCursorPos.x = pRawData->data.mouse.lLastX;
-			g_ptCursorPos.y = pRawData->data.mouse.lLastY;
-
-			if( g_ptCursorPos.x < 0 )
-				g_ptCursorPos.x = 0;
-
-			if( g_ptCursorPos.y < 0 )
-				g_ptCursorPos.y = 0;
 		}
 
 		return DefWindowProc( hWnd, uMsg, wParam, lParam );
